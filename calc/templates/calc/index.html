@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <script>
+            let is_dirty = false;
+
+            function display(val)
+            {
+                if (!is_dirty)
+                {
+                    clr();
+                    is_dirty = true
+                }
+                document.getElementById("{{ form.input.id_for_label }}").value += val;
+            }
+
+            function back()
+            {
+
+                val = document.getElementById("{{ form.input.id_for_label }}").value;
+                document.getElementById("{{ form.input.id_for_label }}").value = val.slice(0, -1);
+            }
+
+            function clr()
+            {
+                document.getElementById("{{ form.input.id_for_label }}").value = "";
+            }
+        </script>
+        <style>
+             .calculator
+             {
+                 margin-bottom: 10px;
+                 width: 190px;
+                 border: solid black 2px;
+             }
+
+             input[type="button"], input[type="submit"]
+             {
+                 color: black;
+                 border: solid black 1px;
+                 width:100%;
+             }
+
+          </style>
+    </head>
+    <body>
+        <div class="calculator">
+            <form class="" action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td colspan="4">{{ form.input }}</td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" id="7" value="7" onclick="display('7')"></td>
+                        <td><input type="button" id="8" value="8" onclick="display('8')"></td>
+                        <td><input type="button" id="9" value="9" onclick="display('9')"></td>
+                        <td><input type="button" id="+" value="+" onclick="display('+')"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" id="4" value="4" onclick="display('4')"></td>
+                        <td><input type="button" id="5" value="5" onclick="display('5')"></td>
+                        <td><input type="button" id="6" value="6" onclick="display('6')"></td>
+                        <td><input type="button" id="-" value="-" onclick="display('-')"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" id="1" value="1" onclick="display('1')"></td>
+                        <td><input type="button" id="2" value="2" onclick="display('2')"></td>
+                        <td><input type="button" id="3" value="3" onclick="display('3')"></td>
+                        <td><input type="button" id="*" value="*" onclick="display('*')"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" id="." value="." onclick="display('.')"></td>
+                        <td><input type="button" id="0" value="0" onclick="display('0')"></td>
+                        <td><input type="button" id="backspace" value="<-" onclick="back()"></td>
+                        <td><input type="button" id="/" value="/" onclick="display('/')"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" id="(" value="(" onclick="display('(')"></td>
+                        <td><input type="button" id=")" value=")" onclick="display(')')"></td>
+                        <td><input type="button" id="clearup" value="C" onclick="clr()"></td>
+                        <td><input type="submit" id="=" value="="></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>
